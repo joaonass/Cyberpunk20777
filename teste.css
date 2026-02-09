@@ -1,8 +1,14 @@
+/* ===============================
+   FONTES
+=============================== */
 @font-face {
   font-family: "Cyberpunk";
   src: url("./video_imagens/Sdcyberpunkcitydemo-pgyBd.otf") format("opentype");
 }
 
+/* ===============================
+   SCROLLBAR
+=============================== */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
@@ -23,6 +29,9 @@
   background: linear-gradient(180deg, rgb(0, 247, 255), rgb(0, 255, 247));
 }
 
+/* ===============================
+   HTML & BODY
+=============================== */
 html, body {
   margin: 0;
   padding: 0;
@@ -32,6 +41,9 @@ html, body {
   background-color: rgb(31, 28, 28);
 }
 
+/* ===============================
+   VIDEO BACKGROUND
+=============================== */
 #video {
   position: fixed;
   top: 0;
@@ -41,6 +53,9 @@ html, body {
   object-fit: cover;
 }
 
+/* ===============================
+   HEADER & LOGO
+=============================== */
 header {
   border-bottom: 2px solid rgb(255, 0, 93);
   display: flex;
@@ -72,35 +87,50 @@ header {
   100% { opacity: 0.7; }
 }
 
+/* ===============================
+   IMAGEM PRINCIPAL
+=============================== */
 #medifoto {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 100%;   
+  max-width: 100%;
   margin: 0 auto;
-  overflow: hidden;  
-  height: 650px; 
+  overflow: hidden;
+  height: 650px;
+  position: relative;
 }
 
 #medifoto img {
-  margin: 10px;           
-  width: calc(100% - 40px); 
-  height: 93%;          
-  object-fit: cover;      
-  object-position: center; 
+  margin: 10px;
+  width: calc(100% - 40px);
+  height: 93%;
+  object-fit: cover;
+  object-position: center;
   border-radius: 8px;
-  transition: filter 0.3s, box-shadow 0.3s, transform 0.3s;
+
+  transform: scale(1) translateY(0);
+  filter: brightness(100%);
+  box-shadow: none;
+
+  transition: 
+    transform 0.4s ease,
+    filter 0.4s ease,
+    box-shadow 0.4s ease; /* agora a sombra transita corretamente */
 }
 
-#medifoto img:hover {
-  filter: brightness(55%);              
-  box-shadow: 0 0 30px rgb(0, 217, 255); 
-  transform: scaleY(0.95);             
+/* Hover no container inteiro */
+#medifoto:hover img {
+  filter: brightness(55%);
+  box-shadow: 0 0 40px 5px rgb(0, 217, 255); /* sombra mais visível */
+  transform: scale(1.02, 0.95) translateY(-2px);
 }
 
 
-
+/* ===============================
+   MENU NEON
+=============================== */
 #listamenu{
   border: 3px solid rgb(255, 0, 93);
   justify-content: center;
@@ -123,9 +153,8 @@ header {
     0 0 10px rgba(255, 0, 93, 0.6),
     0 0 30px rgba(255, 0, 93, 0.3);
   position: relative;
-  background: rgba(0,0,0,0.2); /* leve fundo semi-transparente */
+  background: rgba(0,0,0,0.2);
 }
-
 
 li a{
   font-size: x-large;
@@ -147,7 +176,6 @@ li a:hover {
   animation: neonPulse 0.1s infinite alternate;
 }
 
-/* LINHA ANIMADA EMBAIXO DO LINK */
 li a::after {
   content: '';
   display: block;
@@ -165,4 +193,225 @@ li a:hover::after {
 @keyframes neonPulse {
   from { text-shadow: 0 0 5px #00e5ff, 0 0 10px #00bbff, 0 0 20px #00ffff; }
   to   { text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 30px #00e5ff; }
+}
+
+/* ===============================
+   INPUT HOLOGRÁFICO GLITCH
+=============================== */
+.glitch-input-wrapper{
+  --bg-color: #0d0d0d;
+  --primary-color: #00f2ea;
+  --secondary-color: #a855f7;
+  --text-color: #e5e5e5;
+  --font-family: "Fira Code", Consolas, "Courier New", Courier, monospace;
+  --glitch-anim-duration: 0.4s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-family);
+  font-size: 16px;
+  padding: 3rem;
+}
+
+/* Container do input */
+.input-container {
+  position: relative;
+  width: 500px;
+  height: 300px;
+}
+
+/* Input */
+.holo-input {
+  width: 500px;
+  height: 300px;
+  background: rgba(13, 13, 13, 0.7);
+  border: none;
+  border-bottom: 2px solid #333;
+  outline: none;
+  padding: 0 1rem;
+  color: var(--primary-color);
+  font-family: inherit;
+  font-size: 1.1rem;
+  caret-color: var(--primary-color);
+  z-index: 10;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Label flutuante */
+.input-label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: var(--text-color);
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 11;
+}
+.holo-input:focus + .input-label,
+.holo-input:not(:placeholder-shown) + .input-label {
+  top: -1.5rem;
+  left: 0;
+  font-size: 0.8rem;
+  opacity: 1;
+  color: var(--primary-color);
+}
+.holo-input:focus + .input-label::before,
+.holo-input:focus + .input-label::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #212121;
+}
+.holo-input:focus + .input-label::before {
+  color: var(--secondary-color);
+  animation: glitch-label var(--glitch-anim-duration)
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.holo-input:focus + .input-label::after {
+  color: var(--primary-color);
+  animation: glitch-label var(--glitch-anim-duration)
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both;
+}
+
+/* Camadas decorativas */
+.input-border,
+.input-scanline,
+.input-glow,
+.input-corners {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.input-border {
+  border: 1px solid rgba(0, 242, 234, 0.2);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+.corner {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--primary-color);
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+.corner-tl { top: -0.3rem; left: -0.3rem; border-right: none; border-bottom: none; }
+.corner-tr { top: -0.3rem; right: -0.3rem; border-left: none; border-bottom: none; }
+.corner-bl { bottom: -0.3rem; left: -0.3rem; border-right: none; border-top: none; }
+.corner-br { bottom: -0.3rem; right: -0.3rem; border-left: none; border-top: none; }
+
+.input-glow {
+  background: radial-gradient(ellipse at center, rgba(0, 242, 234, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.input-scanline {
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 242, 234, 0.1) 48%,
+    rgba(0, 242, 234, 0.3) 50%,
+    rgba(0, 242, 234, 0.1) 52%,
+    transparent 100%
+  );
+  opacity: 0;
+}
+
+.input-data-stream {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 100%;
+  height: 0.3rem;
+  display: flex;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+}
+.stream-bar {
+  flex-grow: 1;
+  background-color: var(--primary-color);
+  transition: transform 0.2s, opacity 0.2s;
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+/* Estado de foco */
+.holo-input:focus {
+  border-color: transparent;
+}
+.holo-input:focus ~ .input-border {
+  opacity: 1;
+  border-color: rgba(0, 242, 234, 0.5);
+}
+.holo-input:focus ~ .input-corners .corner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-width: 3px;
+  opacity: 1;
+}
+.holo-input:focus ~ .input-glow {
+  opacity: 1;
+}
+.holo-input:focus ~ .input-scanline {
+  animation: scan-vertical 4s linear infinite;
+}
+.holo-input:focus ~ .input-data-stream {
+  opacity: 1;
+}
+.holo-input:focus ~ .input-data-stream .stream-bar {
+  animation: data-pulse 2s infinite;
+  animation-delay: calc(var(--i) * 0.1s);
+}
+
+/* ===============================
+   KEYFRAMES
+=============================== */
+@keyframes glitch-label {
+  0% { transform: translate(0); clip-path: inset(0 0 0 0); }
+  20% { transform: translate(-0.2rem, 0.1rem); clip-path: inset(50% 0 20% 0); }
+  40% { transform: translate(0.1rem, -0.1rem); clip-path: inset(20% 0 60% 0); }
+  60% { transform: translate(-0.15rem, 0.1rem); clip-path: inset(80% 0 5% 0); }
+  80% { transform: translate(0.15rem, -0.15rem); clip-path: inset(30% 0 45% 0); }
+  100% { transform: translate(0); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes scan-vertical {
+  0% { opacity: 0; transform: translateY(-100%); }
+  25% { opacity: 0.5; }
+  75% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(100%); }
+}
+
+@keyframes data-pulse {
+  0%,100% { transform: scaleY(0.2); opacity: 0.3; }
+  50% { transform: scaleY(1); opacity: 0.8; }
+}
+
+/* ===============================
+   GLITCH INPUT SOBRE IMAGEM
+=============================== */
+#medifoto .glitch-input-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+#medifoto:hover .glitch-input-wrapper {
+  opacity: 1;
+  pointer-events: auto;
 }
