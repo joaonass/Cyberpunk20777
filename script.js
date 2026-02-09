@@ -11,6 +11,3 @@ if (sessionStorage.getItem("introPlayed")) {
   });
 }
 
-
-
-
